@@ -80,38 +80,39 @@ private:
           " FPS = " + std::to_string(1.0 / getElapsedTime());
         cv::putText(img, text, cv::Point(5, 15), cv::FONT_HERSHEY_SIMPLEX, 0.45, cv::Scalar(0, 0, 0), 1);
           cv::imshow("Output", img);
-}
-
-void displayImage() {
-    cv::waitKey(1);
-}
-
-void checkKeyPress() {
-    int key = cv::waitKey(1);
-    if (key == 's') {
-        std::string filename = "pic_" + getCurrentTimestamp() + ".jpg";
-        cv::imwrite(filename, img);
-        std::cout << "Saving image " << filename << std::endl;
     }
-}
 
-int byte2int(uint8_t b) {
-    return static_cast<int>(b);
-}
+    void displayImage() {
+        cv::waitKey(1);
+    }
 
-double getElapsedTime() {
-    static std::chrono::steady_clock::time_point t0 = std::chrono::steady_clock::now();
-    std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
-    double elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count() / 1000.0;
-    t0 = t1;
-    return elapsedTime;
-}
+    void checkKeyPress() {
+        int key = cv::waitKey(1);
+        if (key == 's') {
+            std::string filename = "pic_" + getCurrentTimestamp() + ".jpg";
+            cv::imwrite(filename, img);
+            std::cout << "Saving image " << filename << std::endl;
+        }
+    }
 
-std::string getCurrentTimestamp() {
-    std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
-    std::time_t now_c = std::chrono::system_clock::to_time_t(now);
-    std::tm* now_tm = std::localtime(&now_c);
-    char timestamp[20];
-    std::strftime(timestamp, sizeof(timestamp), "%Y-%m-%d_%H-%M-%S", now_tm);
-    return std::string(timestamp);
+    int byte2int(uint8_t b) {
+        return static_cast<int>(b);
+    }
+
+    double getElapsedTime() {
+        static std::chrono::steady_clock::time_point t0 = std::chrono::steady_clock::now();
+        std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
+        double elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count() / 1000.0;
+        t0 = t1;
+        return elapsedTime;
+    }
+
+    std::string getCurrentTimestamp() {
+        std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
+        std::time_t now_c = std::chrono::system_clock::to_time_t(now);
+        std::tm* now_tm = std::localtime(&now_c);
+        char timestamp[20];
+        std::strftime(timestamp, sizeof(timestamp), "%Y-%m-%d_%H-%M-%S", now_tm);
+        return std::string(timestamp);
+    }
 }
